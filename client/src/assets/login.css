@@ -1,0 +1,14 @@
+.Login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: static;
+    margin-top: 150px;
+    padding-top: 50px;
+}
+
+.LoggedUser{
+    color: black;
+    
+}
