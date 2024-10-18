@@ -14,6 +14,8 @@ function Login() {
         console.log(userObject);
  
         localStorage.setItem('googleToken', response.credential);
+        // Store user email in local storage
+        localStorage.setItem('userEmail', userObject.email);
  
         setUser(userObject);
  
@@ -26,6 +28,7 @@ function Login() {
         document.getElementById("signInDiv").hidden = false;
  
         localStorage.removeItem('googleToken');
+        localStorage.removeItem('userEmail'); 
  
         // Revoke the user's  google session
         if (user && user.email) {
@@ -65,7 +68,7 @@ function Login() {
            
         { user &&
             <div>
-                <h5>{user.name}</h5>
+                <h5>{user.email}</h5>
             </div>
         }
         </div>
