@@ -1,53 +1,41 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider
-} from 'react-router-dom';
+import App from './App';
 import './assets/style/bootstrap.custom.css';
 import './assets/style/index.css';
-import App from './App';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
+import { AuthProvider } from './context/authContext';
+import ProtectedRoute from './routes/protectedRoutes';
 import reportWebVitals from './reportWebVitals';
 import Login from './screens/login';
-import Logout from './screens/logout';
-import Register from './screens/register';
-import { useEffect } from 'react';
-import { gapi } from 'gapi-script';
-
-const clientId = "205920139880-79kfv5ejp8buhub8ohc0n5c1rrvigv3i.apps.googleusercontent.com"
-
-function Auth() {
-
-  useEffect(() => {
-      function start(){
-        gapi.client.init({
-        clientId: clientId,
-        scope: ""
-      })
-    };
-  
-    gapi.load('client:auth2', start)
-  })
-} 
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<App />} >
-      <Route path='/login' element={<Login />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/logout' element={<Logout /> } />
-    </Route>
-  )
-)
+import Home from './screens/Home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    <Auth />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="/login" element={<Login />} />
+            
+            <Route 
+              path="/home" 
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route path="/" element={<Navigate to="/home" />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   </React.StrictMode>
 );
 
 reportWebVitals();
+
