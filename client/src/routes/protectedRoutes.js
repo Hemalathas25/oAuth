@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
+const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useContext(AuthContext);
 
   if (loading) {
@@ -10,7 +10,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   }
 
   return isAuthenticated ? (
-    <Component {...rest} />
+    children
   ) : (
     <Navigate to="/login" />
   );
