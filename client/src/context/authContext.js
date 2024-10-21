@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   const isTokenExpired = (token) => {
     const { exp } = jwtDecode(token);
-    return exp * 1000 < DataTransfer.now();
+    return exp * 1000 < Date.now();
   }
 
   useEffect(() => {
@@ -45,11 +45,11 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(true);
   };
 
-  const logout = async () => {
+  const logout =  () => {
     setIsAuthenticated(false);
     setUser(null);
     localStorage.removeItem('googleToken');
-    await window.google.accounts.id.revoke(); 
+     window.google.accounts.id.revoke(); 
   };
 
   return (

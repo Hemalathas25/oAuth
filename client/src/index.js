@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/authContext';
-import PrivateRoute from './routes/privateRoutes';
+//import PrivateRoute from './routes/privateRoutes';
 import reportWebVitals from './reportWebVitals';
 import Login from './screens/login';
 import Home from './screens/Home';
@@ -19,9 +19,9 @@ root.render(
           <Route path="/" element={<App />}>
             <Route path="/login" element={<Login />} />
             
-            <Route path="/" element={<PrivateRoute />}>
+
             <Route path="/home" element={<Home />} />
-            </Route>
+            
         
 
           </Route>
