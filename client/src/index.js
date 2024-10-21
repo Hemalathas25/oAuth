@@ -1,33 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider
-} from 'react-router-dom';
+import App from './App';
 import './assets/style/bootstrap.custom.css';
 import './assets/style/index.css';
-import App from './App';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/authContext';
+import PrivateRoute from './routes/privateRoutes';
 import reportWebVitals from './reportWebVitals';
 import Login from './screens/login';
-import Logout from './screens/logout';
-import Register from './screens/register';
-
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<App />} >
-      <Route path='/login' element={<Login />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/logout' element={<Logout /> } />
-    </Route>
-  )
-)
+import Home from './screens/Home';
+ 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="/login" element={<Login />} />
+            
+               <Route path="/home" element={<Home />} />
+        
+
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   </React.StrictMode>
 );
+ 
 reportWebVitals();

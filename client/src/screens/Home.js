@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
-import Header from '../component/Header';
 
 const Home = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <p>Loading...</p>
+  }
 
   return (
     <div>
-      <Header />
-      <h1>Welcome to the Home Page</h1>
+      <h1>Welcome !!</h1>
       {isAuthenticated && <p>You are logged in!</p>}
     </div>
   );
