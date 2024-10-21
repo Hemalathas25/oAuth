@@ -1,27 +1,17 @@
 import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import { FaUser } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react'; 
+import { AuthContext } from '../context/authContext'; 
 
 const Header = () => {
-  const [userEmail, setUserEmail] = useState(null); 
+  const { user, isAuthenticated, logout } = useContext(AuthContext); 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    
-    const email = localStorage.getItem('userEmail');
-    if (email) {
-      setUserEmail(email); 
-    }
-  }, []);
-
-  // Handle logout
   const handleLogout = () => {
-    
-    localStorage.removeItem('googleToken');
-    localStorage.removeItem('userEmail');
-    setUserEmail(null); 
+    logout(); 
+    navigate('/login');
   };
 
   return (
@@ -33,15 +23,15 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              {userEmail ? (
+              {isAuthenticated ? (
                 <Dropdown>
                   {/* If logged in, show the user's email and a sign-out button */}
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    <FaUser /> {userEmail}
+                    <FaUser /> {user?.email} 
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item  as="button" onClick={handleLogout}>
+                    <Dropdown.Item as="button" onClick={handleLogout}>
                       Logout
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -63,4 +53,5 @@ const Header = () => {
     </header>
   );
 };
+
 export default Header;

@@ -19,7 +19,9 @@ root.render(
           <Route path="/" element={<App />}>
             <Route path="/login" element={<Login />} />
             
-               <Route path="/home" element={<Home />} />
+            <Route path="/" element={<PrivateRoute />}>
+            <Route path="/home" element={<Home />} />
+            </Route>
         
 
           </Route>
@@ -29,4 +31,4 @@ root.render(
   </React.StrictMode>
 );
  
-reportWebVitals();
+reportWebVitals(); 
