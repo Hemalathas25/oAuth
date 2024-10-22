@@ -4,7 +4,7 @@ import '../assets/login.css';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   const { login } = useContext(AuthContext);
   const [user, setUser] = useState(null); 
   const [error, setError] = useState(null);
@@ -27,6 +27,9 @@ function Login() {
       localStorage.setItem('googleToken', response.credential);
       localStorage.setItem('userEmail', userObject.email);
       setUser(userObject); 
+
+      setIsAuthenticated(true);
+
       login(response.credential);
 
       console.log("Navigating to /home");
@@ -36,7 +39,7 @@ function Login() {
       setError("Failed to decode JWT or navigate:" + error.message);
       console.error("Failed to decode JWT or navigate:", error);
     }
-  }, [login, navigate]);
+  }, [login, navigate, setIsAuthenticated]);
 
   useEffect(() => {
 
