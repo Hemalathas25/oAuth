@@ -33,16 +33,20 @@ function Login() {
       navigate('/home');
       
     } catch (error) {
-      setError("Failed to decode JWT or navigate");
+      setError("Failed to decode JWT or navigate:" + error.message);
       console.error("Failed to decode JWT or navigate:", error);
     }
   }, [login, navigate]);
 
   useEffect(() => {
+
+    let isMounted = true;
+
     const initializeGoogleSignIn = () => {
+      
       /* global google */
       google.accounts.id.initialize({
-        client_id: "205920139880-79kfv5ejp8buhub8ohc0n5c1rrvigv3i.apps.googleusercontent.com", 
+        client_id: "150323554288-qf31fq0kshu4kauunh8nchugc9kqut65.apps.googleusercontent.com", 
         callback: handleCallbackResponse
       });
 
@@ -51,7 +55,7 @@ function Login() {
         { theme: "outline", size: "large" }
       );
 
-      google.accounts.id.prompt(); 
+     // google.accounts.id.prompt(); 
     };
 
     if (window.google) {
@@ -61,9 +65,18 @@ function Login() {
       script.src = "https://accounts.google.com/gsi/client";
       script.async = true;
       script.defer = true;
-      script.onload = initializeGoogleSignIn;
+      script.onload = () => {
+        if (isMounted) {
+          initializeGoogleSignIn();
+        }
+      };
       document.body.appendChild(script);
     }
+
+    return () => {
+      isMounted = false;
+    };
+    
   }, [handleCallbackResponse]);
 
   return (
@@ -75,3 +88,4 @@ function Login() {
 }
 
 export default Login;
+
